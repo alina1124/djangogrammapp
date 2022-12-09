@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # DEBUG = (os.environ.get("DEBUG_VALUE") == 'True')
 DEBUG = True
 
-ALLOWED_HOSTS = ['djangogrammapp.herokuapp.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -51,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'djangogramm.urls'
@@ -151,4 +150,4 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-django_heroku.settings(locals())
+
