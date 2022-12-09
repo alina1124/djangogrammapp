@@ -150,4 +150,5 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 PASSWORD_RESET_TIMEOUT = 14400
 
+CSRF_TRUSTED_ORIGINS = ['https://web-production-0387.up.railway.app']
 
