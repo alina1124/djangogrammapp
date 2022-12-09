@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-8 mt-4">
+        <div class="col-12 container-fluid">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="example: username, #tag" aria-label="Search"
+                       name="search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+
+        {% if users %}
+        <div class="my-3 p-3 bg-body">
+            {% for user in users %}
+            <div class="d-flex text-muted pt-3">
+                <a href="{% url 'profile' user.username %}">
+                    <img src="{{ user.profile.avatar.url }}" alt=""
+                         style="height: 45px; width: 45px; object-fit: cover; object-position: 0% 0;"
+                         class="rounded-circle mb-1 me-2">
+                </a>
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{% url 'profile' user.username %}">
+                                <strong style="font-size: 15px; color: #4a4949;">{{ user.username }}</strong>
+                                <span class="d-block">{{ user.followers.all|length }} followers</span>
+                            </a>
+                        </div>
+                        <div class="col">
+                            {% if request.user != user %}
+                            {% if user in request.user.profile.following.all %}
+                            <a href="{% url 'follow' %}?user_id={{ user.id }}">
+                                <button type="button" class="btn btn-outline-primary col-md-4 float-end">
+                                    Unfollow
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn btn-primary col-md-4 float-end">
+                                    Follow
+                                </button>
+                                {% endif %}
+                            </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif tags %}
+        <div class="my-3 p-3 bg-body">
+            {% for tag in tags %}
+            <div class="d-flex text-muted pt-3">
+                <a href="{{ tag.get_absolute_url }}">
+                    <img src="{% static 'image/tag.jpg' %}" alt=""
+                         style="height: 45px; width: 45px; object-fit: cover; object-position: 0% 0;"
+                         class="rounded-circle mb-1 me-2">
+                </a>
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{{ tag.get_absolute_url }}">
+                                <strong style="font-size: 15px; color: #4a4949;">{{ tag.caption }}</strong>
+                                <span class="d-block">{{ tag.posts.all|length }} posts</span>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ tag.get_absolute_url }}">
+                                <button type="button" class="btn btn-primary col-md-4 float-end">
+                                    View
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="col-4 mt-4">
+        <div class="col-10 float-end">
+            <p style="color: #8E8E8E;">Recently created users</p>
+            {% for user in recently_users %}
+            <div class="row">
+                <div class="col">
+                    <div class="mb-2">
+                        <a href="{% url 'profile' user.username %}">
+                            <img src="{{ user.profile.avatar.url }}" alt=""
+                                 style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                                 class="rounded-circle mb-1 me-2">
+                            <strong style="font-size:16px; color: #4a4949;">{{ user.username }}</strong>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'follow' %}?user_id={{ user.id }}">
+                        {% if user in request.user.profile.following.all %}
+                        <button type="button" class="btn btn-outline-primary col-md-8">
+                            Unfollow
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-primary col-md-8">
+                            Follow
+                        </button>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

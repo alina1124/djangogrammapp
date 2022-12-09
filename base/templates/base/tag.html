@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+#{{ tag.caption }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<section class="h-100 gradient-custom-2">
+    <div class="container">
+        <div class="row d-flex align-items-center h-100">
+            <div class="col-10 mt-3 ">
+                <div class="card" style="border: none;">
+
+                    <div class="row">
+                        <div class="col-3 little-profile mt-4 mb-5">
+                            <img src="{{ last_post.main_image.url }}" alt=""
+                                 style="height: 170px; width: 170px; object-fit: cover; object-position: 0% 0;"
+                                 class="rounded-circle mb-1">
+                        </div>
+                        <div class="col-9 justify-content-start mt-5">
+                            <h1 class="fw-light" style="font-size: 28px">#{{ tag.caption }}</h1>
+                            <p><b>{{ posts|length }}</b> posts</p>
+                        </div>
+                    </div>
+
+                    <p style="color: #8E8E8E;">Most recent</p>
+
+                    <!--            Posts-->
+                    <div class="row">
+                        {% for post in posts %}
+
+                        <div class="col-sm-6 col-md-4 mb-3">
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.main_image.url }}"
+                                     alt="" class="fluid img-thumbnail"
+                                     style="height: 260px; width: 350px; object-fit: cover; object-position: 0% 0;">
+                            </a>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

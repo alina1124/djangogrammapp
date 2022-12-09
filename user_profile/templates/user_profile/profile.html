@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<section class="h-100 gradient-custom-2">
+    <div class="container">
+        <div class="row d-flex align-items-center h-100">
+            <div class="col-10 mt-3 justify-content-center">
+                {% include 'include/_messages.html' %}
+                <div class="card" style="border: none;">
+
+
+                    <div class="little-profile text-center">
+                        <img src="{{ user_profile.avatar.url }}" alt=""
+                             style="height: 180px; width: 180px; object-fit: cover; object-position: 0% 0;"
+                             class="rounded-circle mb-1">
+                        <h3 class="mb-1">{{user_profile.user.username}}</h3>
+                        <p class="mb-1">{{ user_profile.bio }}</p>
+
+                        {% if request.user == user_profile.user %}
+                        <a href="{% url 'edit-profile' %}">
+                            <div class="d-flex pt-1 justify-content-center mt-1 mb-2">
+                                <button type="button" class="btn btn-primary col-md-2">Edit profile</button>
+                            </div>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'follow' %}?user_id={{ user_profile.user.id }}">
+                            <div class="d-flex pt-1 justify-content-center">
+                                {% if request.user.profile in followers %}
+                                <button type="button" class="btn btn-outline-primary col-md-2">
+                                    Unfollow
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn btn-primary col-md-2">
+                                    Follow
+                                </button>
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="row text-center m-t-20 mb-4 mt-2">
+                        <div class="col-lg-4 col-md-4 m-t-20">
+                            <h3 class="m-b-0 font-light">{{ posts|length }}</h3>
+                            <small style="font-size: 16px; color: #4a4949;">Posts</small>
+                        </div>
+                        <div class="col-lg-4 col-md-4 m-t-20">
+                            <h3 class="m-b-0 font-light">{{ followers|length }}</h3>
+                            <div class="dropdown container-fluid d-flex pt-1 justify-content-center">
+                                <a href="#"
+                                   class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <small style="font-size: 16px; color: #4a4949;">Followers</small>
+                                    <i class="bi bi-caret-down-fill ms-1" style="font-size: 11px; color: #4a4949"></i>
+                                </a>
+                                {% if followers %}
+                                <ul class="dropdown-menu scrollable-menu" role="menu">
+                                    {% for follower in followers %}
+                                    <li>
+                                        <div class="row ms-0 me-0 mb-1">
+                                            <div class="col">
+                                                <a href="{% url 'profile' follower.user.username %}">
+                                                    <img src="{{ follower.avatar.url }}" alt=""
+                                                         style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                                                         class="rounded-circle mb-1 me-2">
+                                                    <strong style="font-size:16px; color: #4a4949;">
+                                                        {{ follower.user.username }}</strong>
+                                                </a>
+                                            </div>
+
+                                            <div class="col">
+                                                {% if request.user != follower.user %}
+                                                <a href="{% url 'follow' %}?user_id={{ follower.user.id }}">
+                                                    {% if follower.user in request.user.profile.following.all %}
+                                                    <button type="button"
+                                                            class="btn btn-outline-primary float-end" style="width: auto;">
+                                                        Unfollow
+                                                    </button>
+                                                    {% else %}
+                                                    <button type="button" class="btn btn-primary float-end" style="width: auto;">
+                                                        Follow
+                                                    </button>
+                                                    {% endif %}
+                                                </a>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 m-t-20">
+                            <h3 class="m-b-0 font-light">{{ following|length }}</h3>
+                            <div class="dropdown container-fluid d-flex pt-1 justify-content-center">
+                                <a href="#"
+                                   class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <small style="font-size: 16px; color: #4a4949;">Following</small>
+                                    <i class="bi bi-caret-down-fill ms-1" style="font-size: 11px; color: #4a4949"></i>
+                                </a>
+                                {% if following %}
+                                <ul class="dropdown-menu scrollable-menu" role="menu">
+                                    {% for user in following %}
+                                    <li>
+                                        <div class="row ms-0 me-0 mb-1">
+                                            <div class="col">
+                                                <a href="{% url 'profile' user.username %}">
+                                                    <img src="{{ user.profile.avatar.url }}" alt=""
+                                                         style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                                                         class="rounded-circle mb-1 me-2">
+                                                    <strong style="font-size:16px; color: #4a4949;">
+                                                        {{ user.username }}</strong>
+                                                </a>
+                                            </div>
+
+                                            <div class="col">
+                                                {% if request.user != user %}
+                                                <a href="{% url 'follow' %}?user_id={{ user.id }}">
+                                                    {% if user in request.user.profile.following.all %}
+                                                    <button type="button"
+                                                            class="btn btn-outline-primary float-end" style="width: auto;">
+                                                        Unfollow
+                                                    </button>
+                                                    {% else %}
+                                                    <button type="button" class="btn btn-primary float-end" style="width: auto;">
+                                                        Follow
+                                                    </button>
+                                                    {% endif %}
+                                                </a>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--            Posts-->
+                    <div class="row">
+                        {% for post in posts %}
+
+                        <div class="col-sm-6 col-md-4 mb-3">
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.main_image.url }}"
+                                     alt="" class="fluid img-thumbnail"
+                                     style="height: 260px; width: 350px; object-fit: cover; object-position: 0% 0;">
+                            </a>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

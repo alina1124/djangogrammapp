@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% comment %}
+{% block content %}
+<p>Are ypu sure you want to delete post?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <a href="{{ pre_url }}">Cancel</a>
+    <input type="submit" value="Delete">
+</form>
+
+{% endblock %}
+{% endcomment %}
+
+{% block content %}
+<div class="modal modal-alert d-block bg-secondary py-5 " style="background-color: #adb1b8!important;" tabindex="-1"
+     role="dialog" id="modalChoice">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-0">Delete Post?</h5>
+                <p class="mb-0">You won`t be able to revert this!</p>
+            </div>
+            <div class="modal-footer flex-nowrap p-0 justify-content-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit"
+                                   class="btn btn-lg btn-link fs-6 text-decoration-none  m-0 rounded-0" name="Delete"
+                                   value="Yes, delete it!">
+                        </div>
+                        <div class="col">
+                            <button type="button"
+                                    class="btn btn-lg btn-link fs-6 text-decoration-none m-0 rounded-0 border-start"
+                                    data-bs-dismiss="modal"><a href="{{ pre_url }}" style="color: #0d6efd;">No
+                                thanks</a>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<div class="row">
+    <div class="w-50 mx-auto">
+        <h3>Я тоже с вами!</h3>
+    </div>
+</div>
+
+
+<div class="modal modal-alert d-block bg-secondary py-5 " style="background-color: #adb1b8!important;" tabindex="-1"
+     role="dialog" id="modalChoice2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-0">Delete Post?</h5>
+                <p class="mb-0">You won`t be able to revert this!</p>
+            </div>
+            <div class="modal-footer flex-nowrap p-0 justify-content-center">
+                <form method="GET">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col ">
+                            <button type="submit"
+                                    class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end">
+                                <strong>Yes, delete it!</strong></button>
+                        </div>
+
+                        <div class="col">
+                            <button type="button"
+                                    class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+                                    data-bs-dismiss="modal"><a href="{{ pre_url }}" style="color: #0d6efd;">No
+                                thanks</a>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+
+<form class="mt-4 col-9" method="POST" enctype="multipart/form-data">
+    <img src="{{ user.profile.avatar.url }}" alt=""
+                             style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                             class="rounded-circle mb-3">
+    <strong>{{ request.user.username }}</strong>
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+    {{ user_form.as_p }}
+    <button type="submit" class="btn btn-primary col-md-12">Submit</button>
+
+</form>
+    {% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-8 mt-3">
+        {% include 'include/_messages.html' %}
+        {% for post in posts %}
+        <div class="card mt-3">
+            <div class="card-header" style="background-color: #fff;">
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'profile' post.user.username %}">
+                            <img src="{{ post.user.profile.avatar.url }}" alt=""
+                                 style="height: 40px; width: 40px; object-fit: cover; object-position: 0% 0;"
+                                 class="rounded-circle mb-1 me-2">
+                            <strong style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
+                        </a>
+                    </div>
+                    <div class="dropdown col">
+                        <button class="btn  dropdown-toggle float-end" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" style="height: 30px; border-color: #fff;">
+                            <i class="bi bi-three-dots" style="font-size: 25px;"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if request.user == post.user %}
+                            <li><a class="dropdown-item" href="{% url 'delete-post' %}?post_id={{ post.id }}">Delete</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'follow' %}?user_id={{ post.user.id }}">
+                                    {% if post.user in request.user.profile.following.all %}
+                                    <b style="color: red;">Unfollow</b>
+                                    {% else %}
+                                    Follow
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselExample{{ post.id }}" class="carousel slide" data-bs-wrap="false" data-mdb-ride="carousel"
+                 data-mdb-interval="false">
+
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ post.main_image.url }}" class="d-block w-100"
+                             style="height: 600px; object-position: center 0; object-fit: cover;" alt="...">
+                    </div>
+
+                    {% for image in post.post_image.all %}
+                    <div class="carousel-item">
+                        <img src="{{ image.image.url }}" class="d-block w-100"
+                             style="height: 600px; object-position: center 0; object-fit: cover;" alt="...">
+                    </div>
+                    {% endfor %}
+
+                </div>
+                {% if post.post_image.all %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ post.id }}"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ post.id }}"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                {% if request.user in post.likes.all %}
+                <a href="{% url 'like-post' %}?post_id={{ post.id }}">
+                    <i class="bi bi-heart-fill" style="font-size: 25px; color: red;"></i>
+                </a>
+                {% else %}
+                <a href="{% url 'like-post' %}?post_id={{ post.id }}">
+                    <i class="bi bi-heart" style="font-size: 25px;"></i>
+                </a>
+                {% endif %}
+
+                <a href="{% url 'comment' post.id %}">
+                    <i class="bi bi-chat ms-2" style="font-size: 25px;"></i>
+                </a>
+
+                <p class="mb-2">{{ post.likes.all|length }} likes</p>
+
+                {% if post.caption|length > 25 %}
+
+                <strong class="mb-0" style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
+                {{ post.caption|linebreaks|truncatewords:25 }}
+                <a style="color: grey; text-decoration: none;" href="{{ post.get_absolute_url }}">more</a>
+
+
+                {% elif post.caption|length > 1 and post.caption|length <= 25 %}
+                <strong style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
+                {{ post.caption|linebreaks }}
+                {% endif %}
+
+                {% if post.tags.first.caption != '' %}
+                {% for tag in post.tags.all %}
+                <span class="tag">
+                    <a href="{{ tag.get_absolute_url }}" style="color: #0d6efd;">#{{ tag.caption }}</a>
+                </span>
+                {% endfor %}
+
+                {% endif %}
+
+                <div>
+                <a class="mb-0" href="{% url 'comment' post.id %}" style="color: #6c757d;">
+                    {% if post.comments.all %}
+                    View all comments
+                    {% else %}
+                    Add a comment
+                    {% endif %}
+                </a>
+                <p class="card-text"><small class="text-muted">{{ post.created_at|timesince }} ago</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-4 mt-4">
+        <div class="col-10 float-end">
+            <p style="color: #8E8E8E;">Recently created users</p>
+            {% for user in users %}
+            <div class="row">
+                <div class="col">
+                    <div class="mb-2">
+                        <a href="{% url 'profile' user.username %}">
+                            <img src="{{ user.profile.avatar.url }}" alt=""
+                                 style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                                 class="rounded-circle mb-1 me-2">
+                            <strong style="font-size:16px; font-weight: 500">{{ user.username }}</strong>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'follow' %}?user_id={{ user.id }}">
+                        {% if user in request.user.profile.following.all %}
+                        <button type="button" class="btn btn-outline-primary col-md-8">
+                            Unfollow
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-primary col-md-8">
+                            Follow
+                        </button>
+                        {% endif %}
+                    </a>
+
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

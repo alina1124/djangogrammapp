@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hi {{ user }},
+
+Thank you for signing up to Djangogramm. For security purposes, please click here to confirm your email.
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}

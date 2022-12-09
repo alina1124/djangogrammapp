@@ -1,0 +1,83 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; position: fixed;">
+    <a href="/" class="d-flex align-items-center link-dark text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4 fst-italic">Djangogramm</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        {% url 'home' as url %}
+        <li class="nav-item">
+            <a href="{% url 'home' %}"
+               class="nav-link {% if request.path == url %}active{% else %}link-dark{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                <i class="bi bi-house"></i>
+                Home
+            </a>
+        </li>
+        {% url 'search' as url %}
+        <li class="nav-item">
+            <a href="{% url 'search' %}"
+               class="nav-link {% if request.path == url %}active{% else %}link-dark{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                <i class="bi bi-search"></i>
+                Search
+            </a>
+        </li>
+        {% url 'explore' as url %}
+        <li class="nav-item">
+            <a href="{% url 'explore' %}"
+               class="nav-link {% if request.path == url %}active{% else %}link-dark{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                <i class="bi bi-compass" style="font-size:16px"></i>
+                Explore
+            </a>
+        </li>
+        {% url 'create-post' as url %}
+        <li class="nav-item">
+            <a href="{% url 'create-post' %}"
+               class="nav-link {% if request.path == url %}active{% else %}link-dark{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                <i class="bi bi-plus-square"></i>
+                Create
+            </a>
+        </li>
+        {% if request.user.is_active %}
+        {% url 'profile' request.user.username as url %}
+        <li class="nav-item">
+            <a href="{% url 'profile' request.user.username %}"
+               class="nav-link {% if request.path == url %}active{% else %}link-dark{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16"></svg>
+                <i class="bi bi-person-circle"></i>
+                Profile
+            </a>
+        </li>
+        {% endif %}
+        <li class="nav-item navbar bg-light">
+            <div class="dropdown container-fluid">
+                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ request.user.profile.avatar.url }}" alt=""
+                             style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
+                             class="rounded-circle me-2">
+                    <strong style="font-weight: 500">More</strong>
+                    <i class="bi bi-caret-down-fill ms-1" style="font-size: 11px; color: #4a4949"></i>
+
+                </a>
+                <ul class="dropdown-menu text-small shadow">
+                    <li><a class="dropdown-item" href="{% url 'edit-profile' %}"><i class="bi bi-gear mr-2 "></i> Settings</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right mr-3"></i> Sign out</a></li>
+                </ul>
+
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+
