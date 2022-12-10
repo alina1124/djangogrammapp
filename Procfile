@@ -1,1 +1,1 @@
-web: gunicorn djangogramm.wsgi --log-file -
+web: python manage.py migrate && gunicorn djangogramm.wsgi
