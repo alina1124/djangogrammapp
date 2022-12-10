@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # DEBUG = (os.environ.get("DEBUG_VALUE") == 'True')
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['web-production-0387.up.railway.app', '127.0.0.1']
 
 # Application definition
 
