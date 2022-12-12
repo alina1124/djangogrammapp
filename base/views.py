@@ -53,7 +53,7 @@ def activate_email(request, user, to_email):
     })
     email = send_mail(mail_subject, message, '', [to_email], fail_silently=True)
     if email:
-        success_mess = f"We`re sent you a confirmation email to the {to_email}. " \
+        success_mess = f"We have sent you a confirmation email to the {to_email}. " \
                        f"Please, follow the link in the email to finish registration."
         messages.success(request, success_mess)
     else:
@@ -88,18 +88,20 @@ def create_post(request):
             post.user = user
             post.save()
             tags = request.POST.get('tags')
-            for tag in tags.split(','):
-                if tag.startswith('#'):
-                    tag = tag[1:]
-                new_tag = Tag.objects.filter(caption=tag).first()
-                if new_tag is None:
-                    new_tag = Tag.objects.create(caption=tag)
-                new_tag.posts.add(post)
+            if tags != '':
+                for tag in tags.split(','):
+                    tag = tag.strip()
+                    if not tag.startswith('#'):
+                        tag = f'#{tag}'
+                    new_tag = Tag.objects.filter(caption=tag).first()
+                    if new_tag is None:
+                        new_tag = Tag.objects.create(caption=tag)
+                    new_tag.posts.add(post)
 
             for file in files:
                 PostImage.objects.create(post=post, image=file)
             messages.success(request, 'Post successfully created!')
-            
+
             return redirect('post-view', post_id=post.id)
         else:
             messages.error(request, 'Post creation error!')
@@ -122,7 +124,7 @@ def user_signup(request):
             user.is_active = False
             user.save()
             activate_email(request, user, form.cleaned_data.get('email'))
-            return redirect('login')
+            return redirect('signup')
     else:
         form = UserRegisterForm()
 

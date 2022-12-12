@@ -107,25 +107,24 @@
                 <strong style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
                 {{ post.caption|linebreaks }}
                 {% endif %}
-
                 {% if post.tags.first.caption != '' %}
                 {% for tag in post.tags.all %}
                 <span class="tag">
-                    <a href="{{ tag.get_absolute_url }}" style="color: #0d6efd;">#{{ tag.caption }}</a>
+                    <a href="{{ tag.get_absolute_url }}" style="color: #0d6efd;">{{ tag.caption }}</a>
                 </span>
                 {% endfor %}
 
                 {% endif %}
 
                 <div>
-                <a class="mb-0" href="{% url 'comment' post.id %}" style="color: #6c757d;">
-                    {% if post.comments.all %}
-                    View all comments
-                    {% else %}
-                    Add a comment
-                    {% endif %}
-                </a>
-                <p class="card-text"><small class="text-muted">{{ post.created_at|timesince }} ago</small></p>
+                    <a class="mb-0" href="{% url 'comment' post.id %}" style="color: #6c757d;">
+                        {% if post.comments.all %}
+                        View all comments
+                        {% else %}
+                        Add a comment
+                        {% endif %}
+                    </a>
+                    <p class="card-text"><small class="text-muted">{{ post.created_at|timesince }} ago</small></p>
                 </div>
             </div>
         </div>
