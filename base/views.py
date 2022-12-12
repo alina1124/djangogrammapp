@@ -199,7 +199,7 @@ def like_post(request):
         post.likes.add(user)
         return redirect(get_pre_url(request))
 
-
+@login_required(login_url='login')
 def tag_view(request, tag_name):
     tag = Tag.objects.get(caption=tag_name)
     posts = tag.posts.all()
@@ -211,7 +211,7 @@ def tag_view(request, tag_name):
         'last_post': last_post
     })
 
-
+@login_required(login_url='login')
 def explore(request):
     posts = Post.objects.all()
     return render(request, 'base/explore.html', {
@@ -219,7 +219,7 @@ def explore(request):
         'posts': posts
     })
 
-
+@login_required(login_url='login')
 def search(request):
     user = request.user
     search_query = request.GET.get('search', '')
@@ -243,7 +243,7 @@ def search(request):
         'tags': tags
     })
 
-
+@login_required(login_url='login')
 def comment(request, post_id):
     user = request.user
     post = Post.objects.get(id=post_id)
