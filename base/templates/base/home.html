@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load home_filter %}
 
 {% block title %}
 {{ title }}
@@ -96,14 +97,13 @@
 
                 <p class="mb-2">{{ post.likes.all|length }} likes</p>
 
-                {% if post.caption|length > 25 %}
-
+                {% if post.caption|count_worlds > 25 %}
                 <strong class="mb-0" style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
                 {{ post.caption|linebreaks|truncatewords:25 }}
                 <a style="color: grey; text-decoration: none;" href="{{ post.get_absolute_url }}">more</a>
 
 
-                {% elif post.caption|length > 1 and post.caption|length <= 25 %}
+                {% elif post.caption|count_worlds > 1 and post.caption|count_worlds <= 25 %}
                 <strong style="font-size:17px; font-weight: 500">{{ post.user.username }}</strong>
                 {{ post.caption|linebreaks }}
                 {% endif %}
