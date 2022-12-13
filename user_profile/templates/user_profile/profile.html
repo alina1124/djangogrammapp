@@ -83,7 +83,7 @@
                                                         <div class="d-flex flex-row align-items-center ms-1">
                                                             {% if request.user != follower.user %}
                                                             <a href="{% url 'follow' %}?user_id={{ follower.user.id }}">
-                                                                {% if user in request.user.profile.following.all %}
+                                                                {% if follower.user in request.user.profile.following.all %}
                                                                 <button type="button"
                                                                         class="btn btn-outline-primary float-end"
                                                                         style="width: auto;">
