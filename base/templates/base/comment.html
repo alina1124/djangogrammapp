@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="scrollable-menu col" style="max-height: 400px;" role="menu">
+                        <div class="scrollable-menu col" style="max-height: 350px; height: 350px;" role="menu">
 
                             {% if post.caption %}
                             {{post.caption|linebreaks}}
@@ -136,11 +136,11 @@
 
                                                 {% if comment.likes.all %}
                                                 <ul class="dropdown-menu scrollable-menu" role="menu">
-                                                    {% for user in comment.likes.all %}
+                                                    {% for user_like in comment.likes.all %}
                                                     <li>
                                                         <div class="d-flex flex-start ms-2 me-2" style="width: auto;">
-                                                            <a href="{% url 'profile' user.username %}">
-                                                                <img src="{{ user.profile.avatar.url }}" alt=""
+                                                            <a href="{% url 'profile' user_like.username %}">
+                                                                <img src="{{ user_like.profile.avatar.url }}" alt=""
                                                                      style="height: 50px; width: 50px; object-fit: cover; object-position: 0% 0;"
                                                                      class="rounded-circle mb-1 me-2">
                                                             </a>
@@ -148,16 +148,16 @@
                                                                 <div>
                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                         <p class="me-3">
-                                                                            <a href="{% url 'profile' user.username %}"
+                                                                            <a href="{% url 'profile' user_like.username %}"
                                                                                style="font-weight: 500">
-                                                                                {{ user.username }}
+                                                                                {{ user_like.username }}
                                                                             </a>
                                                                         </p>
 
                                                                         <div class="d-flex flex-row align-items-center ms-1">
                                                                             {% if request.user != user %}
                                                                             <a href="{% url 'follow' %}?user_id={{ user.id }}">
-                                                                                {% if user in request.user.profile.following.all %}
+                                                                                {% if user_like in request.user.profile.following.all %}
                                                                                 <button type="button"
                                                                                         class="btn btn-outline-primary float-end"
                                                                                         style="width: auto;">
