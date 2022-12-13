@@ -199,6 +199,7 @@ def like_post(request):
         post.likes.add(user)
         return redirect(get_pre_url(request))
 
+
 @login_required(login_url='login')
 def tag_view(request, tag_name):
     tag = Tag.objects.get(caption=tag_name)
@@ -211,6 +212,7 @@ def tag_view(request, tag_name):
         'last_post': last_post
     })
 
+
 @login_required(login_url='login')
 def explore(request):
     posts = Post.objects.all()
@@ -218,6 +220,7 @@ def explore(request):
         'title': 'Explore',
         'posts': posts
     })
+
 
 @login_required(login_url='login')
 def search(request):
@@ -229,11 +232,10 @@ def search(request):
     if search_query and not search_query.startswith('#'):
         users = User.objects.filter(username__icontains=search_query)
     elif search_query and search_query.startswith('#'):
-        if len(search_query) == 1:
+        if search_query == '#':
             tags = Tag.objects.all()
         else:
-            tags = Tag.objects.filter(caption__icontains=search_query[1:])
-
+            tags = Tag.objects.filter(caption__icontains=search_query)
     recently_users = User.objects.exclude(username=user.username).order_by('-date_joined')[:5]
     return render(request, 'base/search.html', {
         'title': 'Search',
@@ -242,6 +244,7 @@ def search(request):
         'users': users,
         'tags': tags
     })
+
 
 @login_required(login_url='login')
 def comment(request, post_id):

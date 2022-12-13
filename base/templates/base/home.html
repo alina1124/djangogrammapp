@@ -132,36 +132,48 @@
     </div>
 
     <div class="col-4 mt-4">
-        <div class="col-10 float-end">
+        <div>
             <p style="color: #8E8E8E;">Recently created users</p>
             {% for user in users %}
-            <div class="row">
-                <div class="col">
-                    <div class="mb-2">
-                        <a href="{% url 'profile' user.username %}">
-                            <img src="{{ user.profile.avatar.url }}" alt=""
-                                 style="height: 35px; width: 35px; object-fit: cover; object-position: 0% 0;"
-                                 class="rounded-circle mb-1 me-2">
-                            <strong style="font-size:16px; font-weight: 500">{{ user.username }}</strong>
-                        </a>
+            <div class="d-flex flex-start">
+                <a href="{% url 'profile' user.username %}">
+                    <img src="{{ user.profile.avatar.url }}" alt=""
+                         style="height: 50px; width: 50px; object-fit: cover; object-position: 0% 0;"
+                         class="rounded-circle mb-1 me-2">
+                </a>
+                <div class="flex-grow-1 flex-shrink-1">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>
+                                <a href="{% url 'profile' user.username %}"
+                                   style="font-weight: 500">
+                                    {{ user.username }}
+                                </a>
+                            </p>
+
+                            <div class="d-flex flex-row align-items-center ms-1">
+                                {% if request.user != user %}
+                                <a href="{% url 'follow' %}?user_id={{ user.id }}">
+                                    {% if user in request.user.profile.following.all %}
+                                    <button type="button"
+                                            class="btn btn-outline-primary float-end"
+                                            style="width: auto;">
+                                        Unfollow
+                                    </button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-primary float-end"
+                                            style="width: auto;">
+                                        Follow
+                                    </button>
+                                    {% endif %}
+                                </a>
+                                {% endif %}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div class="col">
-                    <a href="{% url 'follow' %}?user_id={{ user.id }}">
-                        {% if user in request.user.profile.following.all %}
-                        <button type="button" class="btn btn-outline-primary col-md-8">
-                            Unfollow
-                        </button>
-                        {% else %}
-                        <button type="button" class="btn btn-primary col-md-8">
-                            Follow
-                        </button>
-                        {% endif %}
-                    </a>
-
-                </div>
             </div>
-
             {% endfor %}
         </div>
     </div>

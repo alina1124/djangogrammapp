@@ -57,8 +57,8 @@ class ReplyForm(forms.ModelForm):
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Username'}))
+    username = forms.CharField(max_length=25, widget=forms.TextInput(
+        attrs={'class': 'form-control form-control-lg', 'placeholder': 'Username'}))
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Your email'}))
     password1 = forms.CharField(
