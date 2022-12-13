@@ -80,8 +80,7 @@ def home(request):
 def create_post(request):
     user = request.user
     if request.method == 'POST':
-        files = request.FILES.getlist('image')
-
+        files = request.FILES.getlist('images')
         post_form = PostForm(request.POST, request.FILES)
         if post_form.is_valid():
             post = post_form.save(commit=False)
@@ -107,12 +106,10 @@ def create_post(request):
             messages.error(request, 'Post creation error!')
     else:
         post_form = PostForm()
-        images_form = PostImageForm()
 
     return render(request, 'base/create_post.html', {
         'title': 'Create new post | Djangogramm',
-        'post_form': post_form,
-        'images_form': images_form
+        'post_form': post_form
     })
 
 
