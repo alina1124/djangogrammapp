@@ -88,7 +88,7 @@ def create_post(request):
             post.save()
             tags = request.POST.get('tags')
             if tags != '':
-                for tag in tags.split(','):
+                for tag in tags.split(' '):
                     tag = tag.strip()
                     if not tag.startswith('#'):
                         tag = f'#{tag}'
