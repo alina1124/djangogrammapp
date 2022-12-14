@@ -1,5 +1,5 @@
 # Djangogramm
-Djangogramm is a social media platform for sharing photos with your followers
+Djangogramm is a platform for sharing photos with your followers
 
 # Go to the site
 [Djangogramm](https://web-production-0387.up.railway.app/)
