@@ -15,12 +15,12 @@ This project was built using Django and uses Amazon S3 to store images.
 * Edit profile
 
 # Preview
-![](../djangogramm.gif)
+![djangogramm](https://user-images.githubusercontent.com/99839351/207478168-55305ea8-70d1-4fd0-a8bf-03c93b094eb0.gif)
 
 # How To Use
 If you have an Djangogramm account, you need to enter your username and password on the login page. Otherwise, you need to click `register here`. Next, you enter your personal information and receive a confirmation message to your e-mail. Click on the link in the email and you will be redirected to your profile page on Djangogramm.
 
-![](../register_hint.jpg)
+![register_hint](https://user-images.githubusercontent.com/99839351/207478208-4352575d-b2d7-4575-92b9-037caa0c87eb.jpg)
 
 # How to Install the Project
 To clone and run this application, you'll need [Git](https://git-scm.com) .From your command line:
