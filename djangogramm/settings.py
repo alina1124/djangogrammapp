@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = (os.environ.get("DEBUG_VALUE") == 'True')
 # DEBUG = True
 
-ALLOWED_HOSTS = ['web-production-0387.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -150,7 +150,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-0387.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['*']
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
