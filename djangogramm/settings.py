@@ -150,7 +150,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = []
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
