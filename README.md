@@ -44,9 +44,6 @@ Download django usig pip
 sudo apt install python3-pip -y
 ```
 ```
-pip install django
-```
-```
 sudo apt-get install libpq-dev
 ```
 Install packages from requirements.txt
