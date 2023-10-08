@@ -23,33 +23,63 @@ If you have an Djangogramm account, you need to enter your username and password
 ![register_hint](https://user-images.githubusercontent.com/99839351/207478208-4352575d-b2d7-4575-92b9-037caa0c87eb.jpg)
 
 # How to Install the Project
-To clone and run this application, you'll need [Git](https://git-scm.com) .From your command line:
+
+Update the System
 ```
-# Clone this repository
-  git clone https://github.com/alina1124/djangogrammapp.git
+sudo apt-get update
+```
 
-# Create and activate venv
-  python -m venv venv
-  venv\Scripts\activate
+Clone this repository
+```
+git clone https://github.com/alina1124/djangogrammapp.git
+```
 
-# Go into the repository
-  cd djangogrammapp
-  
-# Install packages from requirements.txt
-  pip install -r requirements.txt
-  
-# Apply migrations to the database
-  python manage.py migrate
-  
-# Create Amazon S3 bucket to store images
+Go into the repository
+```
+cd djangogrammapp
+```
 
-# Create Environment Variables:
+Download django usig pip
+```
+sudo apt install python3-pip -y
+```
+```
+pip install django
+```
+Install packages from requirements.txt
+```
+pip install -r requirements.txt
+```  
+Create Amazon S3 bucket to store images
+
+Create Environment Variables:
+```export VARIABLE="value"```
+  ```
   SECRET_KEY
   DEBUG_VALUE
   AWS_ACCESS_KEY_ID
   AWS_SECRET_ACCESS_KEY
   EMAIL_USER
   EMAIL_PASS  
+  AWS_STORAGE_BUCKET_NAME
+```
+```
+python3 manage.py makemigrations
+```
+This will create all the migrations file (database migrations) required to run this App.
+Now, to apply this migrations run the following command
+```
+python3 manage.py migrate
+```
+One last step and then our App will be live. We need to create an admin user to run this App. On the terminal, type the following command and provide username, password and email for the admin user
+
+```
+python3 manage.py createsuperuser
+```
+ We just need to start the server now and then we can start using Djangogrammapp. Start the server by following command
+
+```
+python3 manage.py runserver
 ```
 
 
