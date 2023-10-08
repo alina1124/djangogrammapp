@@ -50,7 +50,21 @@ Install packages from requirements.txt
 ```
 pip install -r requirements.txt
 ```  
-Create Amazon S3 bucket to store images and add default image for the avatar with the ```default_avatar.jpg``` name
+Create Amazon S3 bucket to store images and add default image for the avatar with the ```default_avatar.jpg``` name.
+Add bucket polisy
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::djangogramm-app/*"
+        }
+    ]
+}
+```
 
 Create Environment Variables:
 ```export VARIABLE="value"```
