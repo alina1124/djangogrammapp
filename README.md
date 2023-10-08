@@ -50,7 +50,7 @@ Install packages from requirements.txt
 ```
 pip install -r requirements.txt
 ```  
-Create Amazon S3 bucket to store images
+Create Amazon S3 bucket to store images and add default image for the avatar with the ```default_avatar.jpg``` name
 
 Create Environment Variables:
 ```export VARIABLE="value"```
